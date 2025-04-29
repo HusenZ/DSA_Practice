@@ -1,0 +1,340 @@
+
+---
+
+# ✅ **Essential Linked List Functions for Interviews**
+
+---
+
+### 📌 1. **Insert at Head**
+```cpp
+void insertAtHead(Node* &head, int val) {
+    Node* newNode = new Node(val);
+    newNode->next = head;
+    head = newNode;
+}
+```
+**Time:** O(1)  
+**Space:** O(1)
+
+---
+
+### 📌 2. **Insert at Tail**
+```cpp
+void insertAtTail(Node* &head, int val) {
+    Node* newNode = new Node(val);
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != NULL) temp = temp->next;
+    temp->next = newNode;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 3. **Delete Node by Value**
+```cpp
+void deleteNode(Node* &head, int val) {
+    if (!head) return;
+    if (head->data == val) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+    Node* curr = head;
+    while (curr->next && curr->next->data != val)
+        curr = curr->next;
+
+    if (curr->next) {
+        Node* temp = curr->next;
+        curr->next = curr->next->next;
+        delete temp;
+    }
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 4. **Search for a Node**
+```cpp
+bool search(Node* head, int key) {
+    while (head != NULL) {
+        if (head->data == key) return true;
+        head = head->next;
+    }
+    return false;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 5. **Reverse a Linked List (Iterative)**
+```cpp
+Node* reverse(Node* head) {
+    Node* prev = NULL;
+    Node* curr = head;
+    while (curr != NULL) {
+        Node* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 6. **Find Middle of Linked List (Tortoise-Hare)**
+```cpp
+Node* findMiddle(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 7. **Detect Cycle (Floyd’s Algorithm)**
+```cpp
+bool hasCycle(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) return true;
+    }
+    return false;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 8. **Remove Cycle**
+```cpp
+void removeCycle(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+
+    // Detect
+    do {
+        slow = slow->next;
+        fast = fast->next->next;
+    } while (slow != fast);
+
+    fast = head;
+    while (slow->next != fast->next) {
+        slow = slow->next;
+        fast = fast->next;
+    }
+    slow->next = NULL;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 9. **Merge Two Sorted Linked Lists**
+```cpp
+Node* mergeSorted(Node* l1, Node* l2) {
+    if (!l1) return l2;
+    if (!l2) return l1;
+
+    if (l1->data < l2->data) {
+        l1->next = mergeSorted(l1->next, l2);
+        return l1;
+    } else {
+        l2->next = mergeSorted(l1, l2->next);
+        return l2;
+    }
+}
+```
+**Time:** O(n + m)  
+**Space:** O(n + m) recursive stack
+
+---
+
+### 📌 10. **Reverse in Groups of K**
+```cpp
+Node* reverseKGroup(Node* head, int k) {
+    Node* curr = head;
+    Node* prev = NULL;
+    Node* next = NULL;
+
+    int count = 0;
+    Node* temp = head;
+    for (int i = 0; i < k && temp; i++, temp = temp->next) count++;
+    if (count < k) return head;
+
+    count = 0;
+    while (curr && count < k) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+
+    if (next != NULL)
+        head->next = reverseKGroup(next, k);
+
+    return prev;
+}
+```
+**Time:** O(n)  
+**Space:** O(n/k) recursion
+
+---
+
+### 📌 11. **Check Palindrome Linked List**
+```cpp
+bool isPalindrome(Node* head) {
+    if (!head || !head->next) return true;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast->next && fast->next->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    Node* secondHalf = reverse(slow->next);
+    Node* firstHalf = head;
+
+    while (secondHalf) {
+        if (firstHalf->data != secondHalf->data) return false;
+        firstHalf = firstHalf->next;
+        secondHalf = secondHalf->next;
+    }
+
+    return true;
+}
+```
+**Time:** O(n)  
+**Space:** O(1) (reverse is in-place)
+
+---
+
+### 📌 12. **Remove Duplicates from Sorted List**
+```cpp
+Node* removeDuplicates(Node* head) {
+    Node* curr = head;
+    while (curr && curr->next) {
+        if (curr->data == curr->next->data) {
+            Node* temp = curr->next;
+            curr->next = curr->next->next;
+            delete temp;
+        } else {
+            curr = curr->next;
+        }
+    }
+    return head;
+}
+```
+**Time:** O(n)  
+**Space:** O(1)
+
+---
+
+### 📌 13. **Intersection Point of Two Linked Lists**
+```cpp
+int getLength(Node* head) {
+    int len = 0;
+    while (head) {
+        len++;
+        head = head->next;
+    }
+    return len;
+}
+
+Node* getIntersection(Node* head1, Node* head2) {
+    int l1 = getLength(head1);
+    int l2 = getLength(head2);
+
+    int diff = abs(l1 - l2);
+
+    if (l1 > l2) while (diff--) head1 = head1->next;
+    else while (diff--) head2 = head2->next;
+
+    while (head1 && head2) {
+        if (head1 == head2) return head1;
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+    return NULL;
+}
+```
+**Time:** O(n + m)  
+**Space:** O(1)
+
+---
+
+### 📌 14. **Sort Linked List (Merge Sort)**
+```cpp
+Node* mergeSort(Node* head) {
+    if (!head || !head->next) return head;
+
+    // Split into halves
+    Node* slow = head, *fast = head->next;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    Node* mid = slow->next;
+    slow->next = NULL;
+
+    Node* left = mergeSort(head);
+    Node* right = mergeSort(mid);
+
+    return mergeSorted(left, right);
+}
+```
+**Time:** O(n log n)  
+**Space:** O(log n) recursive stack
+
+---
+
+## 📘 Summary Table
+
+| Operation | Time | Space |
+|----------|------|-------|
+| Insert Head/Tail | O(1) / O(n) | O(1) |
+| Delete Node | O(n) | O(1) |
+| Search Node | O(n) | O(1) |
+| Reverse List | O(n) | O(1) |
+| Detect/Remove Cycle | O(n) | O(1) |
+| Find Middle | O(n) | O(1) |
+| Merge Lists | O(n + m) | O(n + m) |
+| Reverse K-Group | O(n) | O(n/k) |
+| Palindrome | O(n) | O(1) |
+| Remove Duplicates | O(n) | O(1) |
+| Intersection | O(n + m) | O(1) |
+| Sort List | O(n log n) | O(log n) |
+
+---
