@@ -111,6 +111,105 @@ int findKElement(vector<int> nums1, vector<int> nums2, int k){
     
     return newArray[k];
 }
+/*
+## 🧠 **Problem Scenario**
+
+You are given two sorted arrays:
+
+* `nums1` has enough space at the end to store all elements from `nums2`.
+* Your task is to merge them **into `nums1` itself**, **without creating a new array**.
+
+### Example:
+
+```cpp
+nums1 = [1, 3, 5, 0, 0, 0], m = 3
+nums2 = [2, 4, 6], n = 3
+```
+
+Here:
+
+* `m = 3` → First 3 elements in `nums1` are valid: `[1, 3, 5]`
+* `n = 3` → All 3 elements in `nums2` are valid
+* Extra 3 zeros in `nums1` are placeholders for `nums2`'s elements.
+
+---
+
+## ✅ Goal:
+
+After merging `nums2` into `nums1`, it should look like:
+
+```cpp
+nums1 = [1, 2, 3, 4, 5, 6]
+```
+
+---
+
+## 🔍 How It Works (Step-by-Step)
+
+Instead of merging from the **front**, we merge from the **back**.
+
+### Why from back?
+
+Because if we merge from the front, we will overwrite `nums1`'s values.
+
+---
+
+## ✅ Code:
+
+```cpp
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+    int i = m - 1;             // Last valid element in nums1
+    int j = n - 1;             // Last element in nums2
+    int k = m + n - 1;         // Last position in nums1 (end of buffer)
+
+    while (i >= 0 && j >= 0) {
+        if (nums1[i] > nums2[j]) {
+            nums1[k--] = nums1[i--];   // Put bigger one at the end
+        } else {
+            nums1[k--] = nums2[j--];
+        }
+    }
+
+    // If nums2 still has elements left
+    while (j >= 0) {
+        nums1[k--] = nums2[j--];
+    }
+}
+```
+
+---
+
+## 📈 Dry Run with Example:
+
+```cpp
+nums1 = [1, 3, 5, 0, 0, 0], m = 3
+nums2 = [2, 4, 6], n = 3
+```
+
+Initial pointers:
+
+* i = 2 (pointing to 5)
+* j = 2 (pointing to 6)
+* k = 5 (last index of nums1)
+
+Steps:
+
+* 5 < 6 → nums1\[5] = 6, j--, k--
+* 5 > 4 → nums1\[4] = 5, i--, k--
+* 3 < 4 → nums1\[3] = 4, j--, k--
+* 3 > 2 → nums1\[2] = 3, i--, k--
+* 1 < 2 → nums1\[1] = 2, j--, k--
+* nums1\[0] = 1 already in place
+
+✅ Result: `[1, 2, 3, 4, 5, 6]`
+
+---
+
+## 🧠 Time and Space:
+
+* **Time Complexity:** `O(n + m)` (each element visited once)
+* **Space Complexity:** `O(1)` → No new array created!
+*/
 
 int main()
 {
