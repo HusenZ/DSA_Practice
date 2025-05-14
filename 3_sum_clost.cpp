@@ -21,8 +21,7 @@ int threeSumClost(vector<int> nums, int target)
         while (left < right)
         {
             int sum = nums[i] + nums[left] + nums[right];
-
-            // ✅ Correct condition here:
+            // get the absolute value
             if (abs(sum - target) < abs(result - target))
             {
                 result = sum;
