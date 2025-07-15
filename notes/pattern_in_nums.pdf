@@ -1,0 +1,164 @@
+
+## 🧠 1. **XOR Logic** – *"The Magician Trick 🎩"*
+
+### 📌 When to use:
+
+* When all numbers are **unique**, but one is **missing or extra**.
+* Perfect for: `Missing Number`, `Single Number`, `Find Duplicate`
+
+---
+
+### 💡 Core Rules of XOR:
+
+```text
+a ^ a = 0
+a ^ 0 = a
+```
+
+So if you XOR **all numbers from 0 to n** and also XOR **all elements of array**,
+→ the duplicates cancel out
+→ **only the missing or unique number remains**
+
+---
+
+### ✅ Example: `Single Number`
+
+> Every number appears twice except one. Find it.
+
+```cpp
+int singleNumber(vector<int>& nums) {
+    int ans = 0;
+    for (int num : nums) {
+        ans ^= num; // cancel duplicates
+    }
+    return ans;
+}
+```
+
+---
+
+## 🧠 2. **Hashing / Count Array** – *"The Checklist Method ✅"*
+
+### 📌 When to use:
+
+* When you need to **track frequency** or **check existence**.
+* Perfect for: `Find Duplicate`, `Disappeared Numbers`
+
+---
+
+### 💡 Idea:
+
+* Use a `hash map` or `boolean array` to **mark presence**.
+
+#### ✅ Example: `Find All Disappeared Numbers`
+
+> Numbers from 1 to n, some missing. Find them.
+
+```cpp
+vector<int> findDisappearedNumbers(vector<int>& nums) {
+    unordered_set<int> s(nums.begin(), nums.end());
+    vector<int> res;
+    for (int i = 1; i <= nums.size(); i++) {
+        if (s.find(i) == s.end()) {
+            res.push_back(i);
+        }
+    }
+    return res;
+}
+```
+
+---
+
+## 🧠 3. **Index Marking** – *"Mark the Floor Trick 🔨"*
+
+### 📌 When to use:
+
+* When numbers are from 1 to n and **you don’t want extra space**.
+
+### 💡 Idea:
+
+Use the **array itself as a hash map**.
+Mark `nums[i]`'s position as **negative** to say “this number is present”.
+
+---
+
+### ✅ Example: `Find All Disappeared Numbers` – Optimized
+
+```cpp
+vector<int> findDisappearedNumbers(vector<int>& nums) {
+    for (int i = 0; i < nums.size(); i++) {
+        int index = abs(nums[i]) - 1;
+        if (nums[index] > 0)
+            nums[index] *= -1; // mark visited
+    }
+    
+    vector<int> res;
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] > 0)
+            res.push_back(i + 1); // not visited = missing
+    }
+    return res;
+}
+```
+
+💥 No extra space, just smart marking.
+
+---
+
+## 🧠 4. **Index Manipulation / Swapping** – *"Put It Where It Belongs 📦"*
+
+### 📌 When to use:
+
+* When you need numbers to be in order (like `1 to n`)
+* And want to place each number at its correct index.
+
+---
+
+### ✅ Example: `First Missing Positive`
+
+> Find the smallest positive integer missing from the array.
+
+### 💡 Idea:
+
+* While looping, swap `nums[i]` to index `nums[i] - 1` if it's in range.
+* After that, check the first index where `nums[i] != i+1`.
+
+```cpp
+int firstMissingPositive(vector<int>& nums) {
+    int n = nums.size();
+    for (int i = 0; i < n; i++) {
+        while (nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i]) {
+            swap(nums[i], nums[nums[i]-1]);
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (nums[i] != i+1)
+            return i+1;
+    }
+
+    return n+1;
+}
+```
+
+---
+
+## 🧠 Summary Cheat Sheet 📄
+
+| Pattern            | Key Use Case                     | Core Logic                 |
+| ------------------ | -------------------------------- | -------------------------- |
+| XOR                | Missing / Unique Element         | Duplicate cancel-out magic |
+| Hashing / Count    | Frequency / Presence             | Checklist or map of values |
+| Index Marking      | 1 to n Range                     | Use signs to mark visited  |
+| Index Manipulation | Rearrangement / Smallest Missing | Swap to correct place      |
+
+---
+
+### ✅ Your Action Plan Now:
+
+Solve these 4 questions:
+
+1. **Missing Number** (You know it!)
+2. **Single Number**
+3. **Find All Disappeared Numbers**
+4. **First Missing Positive**
