@@ -56,5 +56,13 @@ int main()
     }
     cout << "count of vowels in the string: " << vowelsCount << endl;
     cout << "count of consonants in the string: " << consonantCount << endl;
+
+    string s = "mohsin";
+    cout << s.find("sin") << endl;
+    // s = s.substr(3, s.size() - 1);
+
+    // cout << s;
+    s.append("bhai");
+    cout << s;
     return 0;
 }
