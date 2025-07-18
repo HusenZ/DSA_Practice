@@ -1,0 +1,30 @@
+Core Intuition: Vote & Cancel
+Think of it like this:
+
+Every element is casting a vote.
+
+You keep track of a candidate who might win (majority).
+
+If another number shows up, it’s like voting against the current candidate.
+
+If the count of current candidate's votes becomes zero, drop it and pick a new candidate.
+
+🔁 Step-by-Step Walkthrough
+Imagine this list:
+[3, 3, 4, 2, 4, 4, 2, 4, 4]
+
+We’ll:
+
+Start with no candidate.
+
+As we move through, we “vote”:
+
+Same number as candidate → increase count
+
+Different number → decrease count
+
+If count hits 0 → replace candidate
+
+At the end:
+
+The candidate left is our potential majority.
