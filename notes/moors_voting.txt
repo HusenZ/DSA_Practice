@@ -28,3 +28,23 @@ If count hits 0 → replace candidate
 At the end:
 
 The candidate left is our potential majority.
+
+
+Key Rules of the Algorithm (n/3 version)
+There can be at most two elements that appear more than ⌊n/3⌋ times.
+
+You need two candidate variables and their counts.
+
+Step 1: Find candidates (not guaranteed correct, only potential).
+
+Step 2: Verify them by counting again.
+Final Concept Template (Not Code):
+Track 2 candidates and their counts.
+
+If current matches candidate → increase count.
+
+Else if count is 0 → assign new candidate.
+
+Else → reduce both counts.
+
+Then, verify if those candidates appear > n/3 times.
