@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// optimiezed solution
 int lengthOfLongestSubstringMap(string s)
 {
     unordered_map<char, int> lastSeen;
@@ -24,6 +25,7 @@ int lengthOfLongestSubstringMap(string s)
     return maxLen;
 }
 
+// using unordered set
 int lengthOfLongestSubstringSet(string s)
 {
     unordered_set<char> seen;
