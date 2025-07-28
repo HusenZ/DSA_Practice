@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void sortColors(vector<int> &nums)
+void sortColors(vector<int>& nums)
 {
     int low = 0, mid = 0, high = nums.size() - 1;
 
