@@ -1,54 +1,41 @@
 #include <iostream>
 #include <vector>
-#include <numeric>
-#include <algorithm>
 
 using namespace std;
-bool countSplits(vector<int> &nums, int k, int maxSumAllowed)
-{
-    int split = 1, currSum = 0;
-    for (int num : nums)
-    {
-        if (currSum + num <= maxSumAllowed)
-        {
-            currSum += num;
-        }
-        else
-        {
-            split++;
-            currSum = num;
-        }
-    }
-    return split <= k;
-}
 
-int splitArray(vector<int> &nums, int k)
-{
-    int low = *max_element(nums.begin(), nums.end());   // Minimum possible max subarray sum
-    int high = accumulate(nums.begin(), nums.end(), 0); // Maximum possible max subarray sum
-
-    int result = high;
-
-    while (low <= high)
-    {
-        int mid = low + (high - low) / 2;
-        if (countSplits(nums, k, mid))
-        {
-            result = mid;
-            high = mid - 1;
+void sortZeros(vector<int>& nums) {
+    int count0 = 0, count1 = 0, count2 = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] == 0) {
+            count0++;
         }
-        else
-        {
-            low = mid + 1;
+        else if (nums[i] == 1) {
+            count1++;
+        }
+        else {
+            count2++;
         }
     }
-    return result;
-}
-int main()
-{
-    vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int k = 5;
+    int indx = 0;
+    for (int i = 0; i < count0; i++) {
+        nums[indx++] = 0;
+    }
+    for (int i = 0; i < count1; i++) {
+        nums[indx++] = 1;
+    }
+    for (int i = 0; i < count2; i++) {
+        nums[indx++] = 2;
+    }
 
-    cout << "Minimum largest subarray sum: " << splitArray(nums, k) << endl;
+}
+
+int main() {
+    vector<int> nums = { 1, 2, 0, 2, 0, 1 };
+    sortZeros(nums);
+    for (int num : nums) {
+        cout << num << " ";
+    }
+    cout << endl;
+    cout << *(nums.begin());
     return 0;
 }

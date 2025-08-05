@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
 {
     int i = m - 1;     // pointer for nums1's actual elements
     int j = n - 1;     // pointer for nums2
@@ -33,8 +33,8 @@ int main()
     vector<int> nums1 = {
         1,
         2,
-        3};
-    vector<int> nums2 = {2, 5, 6};
+        3 };
+    vector<int> nums2 = { 2, 5, 6 };
     int m = 3, n = 3;
     merge(nums1, m, nums2, n);
     cout << "hello" << endl;
