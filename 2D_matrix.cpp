@@ -44,3 +44,42 @@ public:
         return false;
     }
 };
+
+void spiralOrder(vector<vector<int>>& matrix) {
+    int m = matrix.size(), n = matrix[0].size();
+    int srow = 0, scol = 0, erow = m - 1, ecol = n - 1;
+
+    while (srow <= erow && scol <= ecol) {
+        for (int j = scol; j <= n - 1; j++) {
+            cout << matrix[srow][j] << " ";
+        }
+        cout << endl;
+        for (int i = srow + 1; i <= erow; i++) {
+            cout << matrix[i][ecol] << " ";
+        }
+        cout << endl;
+        for (int j = ecol - 1; j >= scol; j--) {
+            cout << matrix[erow][j] << " ";
+        }
+        cout << endl;
+        for (int i = erow - 1; i >= srow + 1; i--) {
+            cout << matrix[scol][i] << " ";
+        }
+        cout << endl;
+        srow++;
+        scol++;
+    }
+}
+
+int main() {
+    vector<vector<int>> matrix = { {1 ,2, 3}, {4, 5, 6}, {7, 8, 9}, };
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix[i].size(); j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+    spiralOrder(matrix);
+    return 0;
+}
