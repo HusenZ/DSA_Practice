@@ -3,36 +3,27 @@
 
 using namespace std;
 
-vector<vector<int>> permute(vector<int>& nums) {
-    vector<vector<int>> result;
-    vector<int> current;
-    vector<bool> used(nums.size(), false);
-
-    backtrack(nums, current, used, result);
-    return result;
-}
-
-void backtrack(vector<int>& nums,
-    vector<int>& current,
-    vector<bool>& used,
-    vector<vector<int>>& result) {
-
-    if (current.size() == nums.size()) {
-        result.push_back(current);
+void getPerms(vector<int>& nums, int idx, vector<vector<int>>& ans) {
+    if (idx == nums.size()) {
+        ans.push_back({ nums });
         return;
     }
 
-    for (int i = 0; i < nums.size(); i++) {
-        if (used[i]) continue;
+    for (int i = idx; i < nums.size(); i++) {
+        swap(nums[idx], nums[i]);
+        getPerms(nums, idx + 1, ans);
 
-        current.push_back(nums[i]);
-        used[i] = true;
-
-        backtrack(nums, current, used, result);
-
-        used[i] = false;
-        current.pop_back();
+        swap(nums[idx], nums[i]);
+        while (idx < nums.size() && nums[idx] == nums[idx - 1]) {
+            idx++;
+        }
+        getPerms(nums, idx, ans);
     }
+}
+vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int>> ans;
+    getPerms(nums, 0, ans);
+    return ans;
 }
 
 int main() {
